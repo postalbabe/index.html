@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Christmas Box Widget</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1a1a1a;
+      color: white;
+      padding: 20px;
+      overflow: hidden;
+    }
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1em;
+      animation: fall 10s linear infinite;
+      opacity: 0.8;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+      }
+    }
+    .box-container {
+      width: 300px;
+      margin: auto;
+      padding: 20px;
+      background: #2b2b2b;
+      border-radius: 15px;
+      text-align: center;
+      border: 3px solid #ff3b3b;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+    }
+    .box {
+      width: 150px;
+      height: 150px;
+      margin: auto;
+      background: url('https://i.imgur.com/t4hQh8u.png') no-repeat center/contain;
+      cursor: pointer;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    .glow {
+      filter: drop-shadow(0 0 20px #ff0000) drop-shadow(0 0 40px #ff0000);
+    }
+    .box:hover {
+      transform: scale(1.1);
+    }
+    .item-display {
+      margin-top: 15px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #00eaff;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #ff3b3b;
+      border: none;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #ff6b6b;
+    }
+  </style>
+</head>
+<body>
+  <audio id="unwrapSound" src="https://cdn.pixabay.com/download/audio/2021/11/16/audio_4f7ad44a33.mp3?filename=paper-rip-1-88774.mp3"></audio>
+
+  <div class="box-container">
+    <h2>🎁 Christmas Gift Box</h2>
+    <div class="box" id="giftBox" onclick="openBox()"></div>
+    <div id="itemDisplay" class="item-display">Click the box!</div>
+    <button onclick="openBox()">Open with Channel Points</button>
+  </div>
+
+  <script>
+    // Snow effect
+    function createSnow() {
+      for (let i = 0; i < 40; i++) {
+        const snow = document.createElement('div');
+        snow.className = 'snowflake';
+        snow.innerHTML = '❄';
+        snow.style.left = Math.random() * 100 + 'vw';
+        snow.style.fontSize = Math.random() * 1.5 + 0.5 + 'em';
+        snow.style.animationDuration = Math.random() * 5 + 5 + 's';
+        snow.style.opacity = Math.random();
+        document.body.appendChild(snow);
+      }
+    }
+    createSnow();
+
+    // Products
+    const products = [
+      "Holiday Mug",
+      "Cozy Blanket",
+      "Reindeer Plushie",
+      "Candy Cane Pack",
+      "Snowflake LED Light",
+      "Mystery Gift",
+      "Gingerbread Cookie Set"
+    ];
+
+    function openBox() {
+      const box = document.getElementById('giftBox');
+      const sound = document.getElementById('unwrapSound');
+
+      // Play sound
+      sound.currentTime = 0;
+      sound.play();
+
+      // Glow effect
+      box.classList.add('glow');
+      setTimeout(() => box.classList.remove('glow'), 1200);
+
+      // Show random item
+      const randomItem = products[Math.floor(Math.random() * products.length)];
+      document.getElementById('itemDisplay').innerText = `You got: ${randomItem}!`;
+    }
+  </script>
+</body>
+</html>
